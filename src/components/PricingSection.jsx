@@ -7,7 +7,7 @@ export default function PricingSection() {
       <div className="section-inner">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">Transparent Pricing</div>
-          <h2 className="section-title">Simple, Honest Pricing</h2>
+          <h2 className="section-title">Simple, Honest <span className="hl2">Pricing</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>No hidden charges. Exact price confirmed on call before booking.</p>
         </div>
         <div className="pricing-grid">

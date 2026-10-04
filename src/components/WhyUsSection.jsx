@@ -1,5 +1,6 @@
 import { WHY_US } from '../lib/landing.js';
 import { WHY_US_VARIANTS } from '../lib/trust-variants.js';
+import TwoTone from './TwoTone.jsx';
 
 const TITLES = {
   home: '6 Reasons Gurgaon Families Book Us',
@@ -15,7 +16,7 @@ export default function WhyUsSection({ variant } = {}) {
       <div className="section-inner">
         <div style={{ textAlign: 'center', marginBottom: 0 }} className="fade-up">
           <div className="section-tag">Why Choose Us</div>
-          <h2 className="section-title">{title}</h2>
+          <h2 className="section-title"><TwoTone text={title} /></h2>
         </div>
         <div className="whyus-grid" style={{ marginTop: '36px' }}>
           {items.map(([icon, t, desc]) => (

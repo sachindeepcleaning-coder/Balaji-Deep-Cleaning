@@ -6,7 +6,7 @@ export default function ReviewsSection({ reviews = REVIEWS }) {
       <div className="section-inner">
         <div className="reviews-head fade-up">
           <div className="section-tag">Customer Reviews</div>
-          <h2 className="section-title">What Gurgaon Families Say</h2>
+          <h2 className="section-title">What Gurgaon Families <span className="hl2">Say</span></h2>
           <div style={{ marginTop: '14px' }}>
             <div className="rating-summary">
               <span className="rs-stars">⭐⭐⭐⭐⭐</span>

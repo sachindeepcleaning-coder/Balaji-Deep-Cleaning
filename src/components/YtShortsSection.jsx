@@ -92,7 +92,7 @@ export default function YtShortsSection() {
       <div className="section-inner">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">Real Work · YouTube Shorts</div>
-          <h2 className="section-title">Watch Us Clean in 60 Seconds</h2>
+          <h2 className="section-title">Watch Us Clean in <span className="hl2">60 Seconds</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>
             Real deep-cleaning jobs by our team in Gurgaon — straight from our YouTube channel, Cleaning Service In Gurgaon.
           </p>

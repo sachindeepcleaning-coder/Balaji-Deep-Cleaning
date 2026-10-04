@@ -65,6 +65,15 @@ video { height: auto; }
 .text-muted { color: var(--muted); }
 .glass { background: #fff; border: 1px solid var(--border); }
 
+/* ---------- Topbar (template blue info strip) ---------- */
+.topbar { background: var(--primary); color: #fff; font-size: .8rem; }
+.topbar-inner { max-width: var(--container); margin: 0 auto; padding: 7px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.topbar a { color: #fff; font-weight: 500; }
+.topbar a:hover { text-decoration: underline; }
+.topbar-sep { margin: 0 10px; opacity: .6; }
+.topbar-right { display: flex; align-items: center; flex-wrap: wrap; }
+@media (max-width: 640px) { .topbar-left { display: none; } .topbar-inner { justify-content: center; text-align: center; } }
+
 /* ---------- Section heads (template .section-head) ---------- */
 .section-tag {
   display: inline-block; color: var(--primary); font-weight: 600;

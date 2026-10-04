@@ -56,7 +56,7 @@ export default function LocalReel() {
       <div className="section-inner sdc-reel-wrap">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">Real Work</div>
-          <h2 className="section-title">See Our Cleaning in Action</h2>
+          <h2 className="section-title">See Our Cleaning in <span className="hl2">Action</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>Watch a real deep-cleaning job done by our team in Gurgaon. Tap to pause.</p>
         </div>
         <div className="sdc-reel-grid sdc-reel-single">

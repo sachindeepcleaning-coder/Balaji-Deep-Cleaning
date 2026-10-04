@@ -7,7 +7,7 @@ export default function AreasSection() {
       <div className="section-inner" style={{ textAlign: 'center' }}>
         <div className="fade-up">
           <div className="section-tag">Areas Served</div>
-          <h2 className="section-title">We Cover All of Gurgaon</h2>
+          <h2 className="section-title">We Cover All of <span className="hl2">Gurgaon</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>Serving every sector and locality in Gurugram (Gurgaon)</p>
         </div>
         <div className="areas-list fade-up">

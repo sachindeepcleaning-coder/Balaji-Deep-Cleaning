@@ -71,7 +71,7 @@ export default function RelatedGuides({ serviceKey }) {
       <div className="section-inner">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">Guides & Tips</div>
-          <h2 className="section-title">Read Our Cleaning Guides</h2>
+          <h2 className="section-title">Read Our Cleaning <span className="hl2">Guides</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>Practical, expert guides written for Gurgaon homes — costs, frequency and how it's done.</p>
         </div>
         <div className="areas-list" style={{ marginTop: '28px' }}>

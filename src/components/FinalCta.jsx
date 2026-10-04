@@ -5,7 +5,7 @@ export default function FinalCta() {
   return (
     <section className="final-cta">
       <div className="final-cta-inner fade-up">
-        <h2>Ready for a Spotless Home?</h2>
+        <h2>Ready for a <span className="hl2">Spotless Home?</span></h2>
         <p>Join 5,000+ happy Gurgaon families. Get your free quote in under 30 seconds — no commitment, no hidden charges, pay only after cleaning.</p>
         <div className="final-cta-btns">
           <a

@@ -24,7 +24,7 @@ export default function RelatedServices({ currentHref }) {
       <div className="section-inner">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">Explore More</div>
-          <h2 className="section-title">Related Deep Cleaning Services in Gurgaon</h2>
+          <h2 className="section-title">Related Deep Cleaning Services in <span className="hl2">Gurgaon</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>Every service is available across all Gurgaon sectors with the same police-verified team and pay-after-cleaning policy.</p>
         </div>
         <div className="areas-list" style={{ marginTop: '28px' }}>

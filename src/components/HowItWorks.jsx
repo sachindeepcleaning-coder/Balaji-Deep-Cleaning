@@ -6,7 +6,7 @@ export default function HowItWorks() {
       <div className="section-inner">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">How It Works</div>
-          <h2 className="section-title">Book in 4 Easy Steps</h2>
+          <h2 className="section-title">Book in 4 <span className="hl2">Easy Steps</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>A verified professional at your door in hours — not days.</p>
         </div>
         <div className="hiw-wrap">

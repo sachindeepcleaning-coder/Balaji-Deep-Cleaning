@@ -91,7 +91,7 @@ export default function OfficeReelSection() {
       <div className="section-inner">
         <div style={{ textAlign: 'center' }} className="fade-up">
           <div className="section-tag">Real Work · Instagram</div>
-          <h2 className="section-title">See Our Cleaning in Action</h2>
+          <h2 className="section-title">See Our Cleaning in <span className="hl2">Action</span></h2>
           <p className="section-sub" style={{ margin: '0 auto' }}>
             Real deep-cleaning jobs by our team in Gurgaon — straight from our Instagram, @cleaning_service_in_gurgaon.
           </p>
