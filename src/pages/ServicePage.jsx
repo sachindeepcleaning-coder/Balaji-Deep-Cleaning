@@ -205,7 +205,7 @@ export default function ServicePage({ serviceKey, bhk, url = '' }) {
             <div className="hiw-wrap">
               {s.process.map((p) => (
                 <div key={p.step} className="hiw-step fade-up">
-                  <div className="hiw-num">{p.step}</div>
+                  <div className="hiw-num"><span>{p.step}</span></div>
                   <div className="hiw-title">{p.title}</div>
                   <div className="hiw-desc">{p.desc}</div>
                 </div>

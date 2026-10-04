@@ -78,7 +78,7 @@ export default function ContactPage({ url }) {
               ['After: walkthrough, then pay', 'You inspect every room first and pay only on approval — UPI, cash or bank transfer. Anything missed is re-cleaned on the spot, free.'],
             ].map(([title, desc], i) => (
               <div key={title} className="hiw-step fade-up">
-                <div className="hiw-num">{i + 1}</div>
+                <div className="hiw-num"><span>{i + 1}</span></div>
                 <div className="hiw-title">{title}</div>
                 <div className="hiw-desc">{desc}</div>
               </div>
@@ -122,17 +122,17 @@ export default function ContactPage({ url }) {
           </div>
           <div className="hiw-wrap" style={{ marginTop: '36px' }}>
             <div className="hiw-step fade-up">
-              <div className="hiw-num">1</div>
+              <div className="hiw-num"><span>1</span></div>
               <div className="hiw-title">Call or WhatsApp</div>
               <div className="hiw-desc">Share your requirements with our team.</div>
             </div>
             <div className="hiw-step fade-up">
-              <div className="hiw-num">2</div>
+              <div className="hiw-num"><span>2</span></div>
               <div className="hiw-title">Get a Free Quote</div>
               <div className="hiw-desc">Transparent pricing confirmed on the call.</div>
             </div>
             <div className="hiw-step fade-up">
-              <div className="hiw-num">3</div>
+              <div className="hiw-num"><span>3</span></div>
               <div className="hiw-title">We Clean</div>
               <div className="hiw-desc">Pay only after you inspect the results.</div>
             </div>

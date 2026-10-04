@@ -111,7 +111,7 @@ export default function PpcPage({ url, file }) {
             <div className="hiw-wrap ppc-stats" style={{ marginTop: '24px' }}>
               {cfg.stats.map(([num, label]) => (
                 <div key={label} className="hiw-step fade-up">
-                  <div className="hiw-num">{num}</div>
+                  <div className="hiw-num"><span>{num}</span></div>
                   <div className="hiw-title">{label}</div>
                 </div>
               ))}
@@ -155,7 +155,7 @@ export default function PpcPage({ url, file }) {
           <div className="hiw-wrap" style={{ marginTop: '36px' }}>
             {STEPS.map(([title, desc], i) => (
               <div key={title} className="hiw-step fade-up">
-                <div className="hiw-num">{i + 1}</div>
+                <div className="hiw-num"><span>{i + 1}</span></div>
                 <div className="hiw-title">{title}</div>
                 <div className="hiw-desc">{desc}</div>
               </div>

@@ -153,7 +153,7 @@ export default function ResidentialPage({ url }) {
               ['Walkthrough, then pay', 'You inspect every room first. UPI, cash or bank transfer after approval.'],
             ].map(([title, desc], i) => (
               <div key={title} className="hiw-step fade-up">
-                <div className="hiw-num">{i + 1}</div>
+                <div className="hiw-num"><span>{i + 1}</span></div>
                 <div className="hiw-title">{title}</div>
                 <div className="hiw-desc">{desc}</div>
               </div>

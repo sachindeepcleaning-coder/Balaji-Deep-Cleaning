@@ -97,7 +97,7 @@ export default function PartnersPage({ url }) {
           <div className="hiw-wrap" style={{ marginTop: '36px' }}>
             {STEPS.map(([title, desc], i) => (
               <div key={title} className="hiw-step fade-up">
-                <div className="hiw-num">{i + 1}</div>
+                <div className="hiw-num"><span>{i + 1}</span></div>
                 <div className="hiw-title">{title}</div>
                 <div className="hiw-desc">{desc}</div>
               </div>

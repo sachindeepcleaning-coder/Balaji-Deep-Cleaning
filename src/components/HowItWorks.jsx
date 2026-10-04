@@ -12,7 +12,7 @@ export default function HowItWorks() {
         <div className="hiw-wrap">
           {HOW_IT_WORKS.map(([num, title, desc]) => (
             <div key={num} className="hiw-step fade-up">
-              <div className="hiw-num">{num}</div>
+              <div className="hiw-num"><span>{num}</span></div>
               <div className="hiw-title">{title}</div>
               <div className="hiw-desc">{desc}</div>
             </div>
