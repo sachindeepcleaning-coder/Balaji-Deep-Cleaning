@@ -13,8 +13,11 @@
   var lastPush = { name: '', time: 0 };
 
   function pushOnce(name) {
+    // 250ms: same-click duplicates (capture listener + React onClick for the
+    // same physical click) land within milliseconds of each other. A wider
+    // window would swallow genuine rapid re-taps on different buttons.
     var now = Date.now();
-    if (lastPush.name === name && now - lastPush.time < 800) return;
+    if (lastPush.name === name && now - lastPush.time < 250) return;
     lastPush = { name: name, time: now };
     window.dataLayer.push({ event: name });
   }
