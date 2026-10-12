@@ -1,3 +1,5 @@
+import { phoneCallClick } from '../lib/landing.js';
+
 export default function PricingTable({ rows, title = 'Deep Cleaning Service Charges in Gurgaon', subtitle = 'All prices confirmed upfront before any professional visits your home.' }) {
   if (!rows || rows.length === 0) return null;
   return (
@@ -27,7 +29,7 @@ export default function PricingTable({ rows, title = 'Deep Cleaning Service Char
           </table>
         </div>
         <p style={{ textAlign: 'center', marginTop: 14, fontSize: 13, color: 'var(--muted)' }}>
-          Need a confirmed quote? Call <a href="tel:+919560739281" style={{ color: 'var(--primary)', fontWeight: 600 }}>+91 95607 39281</a> — prices are locked before any professional visits.
+          Need a confirmed quote? Call <a href="tel:+919560739281" onClick={phoneCallClick} style={{ color: 'var(--primary)', fontWeight: 600 }}>+91 95607 39281</a> — prices are locked before any professional visits.
         </p>
       </div>
     </section>

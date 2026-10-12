@@ -276,7 +276,7 @@ export default function AboutPage({ url }) {
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <a href={SOCIAL.facebook} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700 }}>Facebook →</a>
                 <a href={SOCIAL.instagram} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700 }}>Instagram →</a>
-                <a href={WHATSAPP} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700 }}>WhatsApp →</a>
+                <a href={WHATSAPP} target="_blank" rel="noopener" onClick={whatsappClick} style={{ color: 'var(--primary)', fontWeight: 700 }}>WhatsApp →</a>
               </div>
             </div>
           </div>

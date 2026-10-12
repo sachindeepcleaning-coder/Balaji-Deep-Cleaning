@@ -162,7 +162,7 @@ export default function ContactPage({ url }) {
             />
           </div>
           <div style={{ textAlign: 'center', marginTop: 16, fontSize: '.92rem', color: 'var(--muted)' }}>
-            <strong style={{ color: 'var(--dark)' }}>Balaji Deep Cleaning</strong> — Sushant Lok Phase I, Gurugram, Haryana 122009 &nbsp;|&nbsp; <a href="tel:+919560739281" style={{ color: 'var(--primary)', fontWeight: 700 }}>+91 95607-39281</a>
+            <strong style={{ color: 'var(--dark)' }}>Balaji Deep Cleaning</strong> — Sushant Lok Phase I, Gurugram, Haryana 122009 &nbsp;|&nbsp; <a href="tel:+919560739281" onClick={phoneCallClick} style={{ color: 'var(--primary)', fontWeight: 700 }}>+91 95607-39281</a>
           </div>
         </div>
       </section>

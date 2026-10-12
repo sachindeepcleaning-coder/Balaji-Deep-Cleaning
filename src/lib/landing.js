@@ -1,32 +1,39 @@
 import { GTM_ID, WHATSAPP_NUMBER, waMsg, AREAS } from './site.js';
 
-// ---- Analytics: single gtag wrapper that no-ops safely ----
-export function gtag(...args) {
+// ---- Analytics: GTM custom-event pushes (matches GTM Custom Event triggers) ----
+// GTM triggers expect: dataLayer.push({ event: 'phone_call_click' })
+// NOTE: never push gtag-style arrays (['event', name, {...}]) here — GTM
+// Custom Event triggers ignore arrays, which is why call/WhatsApp tags
+// never fired. Also: never include PII (phone numbers, names) in events.
+function pushEvent(name) {
   try {
+    // Route through the shared delegation helper when present so the
+    // 800ms dedup window prevents double-firing (React onClick + the
+    // document-level listener in public/tracking.js see the same click).
+    if (typeof window !== 'undefined' && typeof window.__balajiPush === 'function') {
+      window.__balajiPush(name);
+      return;
+    }
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(args);
-    if (typeof window.gtag === 'function') window.gtag(...args);
+    window.dataLayer.push({ event: name });
   } catch (_) { /* no-op */ }
 }
 
 export function track(event, params = {}) {
-  gtag('event', event, params);
+  // Keep the same (event) => { event } signature used by forms, but only
+  // forward the event name — extra params are dropped to avoid PII leaks.
+  void params;
+  pushEvent(event);
 }
 
-// Phone click → GA4 "phone_call_click" event (matches GTM trigger).
+// Phone click → GTM "phone_call_click" custom event (matches GTM trigger).
 export function phoneCallClick() {
-  track('phone_call_click', {
-    phone_number: '+91 9560739281',
-    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-  });
+  pushEvent('phone_call_click');
 }
 
-// WhatsApp click → GA4 "whatsapp_click" event (matches GTM trigger).
+// WhatsApp click → GTM "whatsapp_click" custom event (matches GTM trigger).
 export function whatsappClick() {
-  track('whatsapp_click', {
-    phone_number: '+919560739281',
-    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-  });
+  pushEvent('whatsapp_click');
 }
 
 export const ANALYTICS = { GTM_ID };
