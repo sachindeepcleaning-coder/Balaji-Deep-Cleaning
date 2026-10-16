@@ -33,6 +33,10 @@ export const NETLIFY_FORM_NAME = 'lead-quote';
 // Public client-side key (see Web3Forms FAQ: access keys are public by design).
 export const WEB3FORMS_KEY = '9563fca0-67dc-49d3-b0ea-0e9ab47b3a28';
 
+// Lead gateway (Cloudflare Worker) — tried first, Web3Forms is the fallback.
+export const GATEWAY_URL = 'https://lead-gateway.sachindeepcleaning.workers.dev';
+export const SITE_KEY = 'BALAJI';
+
 // Core business claims (from the high-converting landing page).
 // Rollback: the previous Formspree form ID was 'moevgqwr'.
 // export const FORMSPREE_ID = 'moevgqwr';
