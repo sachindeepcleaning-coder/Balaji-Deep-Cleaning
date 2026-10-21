@@ -1,4 +1,5 @@
 import { WEB3FORMS_KEY, GATEWAY_URL, SITE_KEY } from './site.js';
+import { normalizePhone } from './phone.js';
 
 // Shared lead sender for all Balaji forms (gateway-first, Web3Forms fallback).
 // Returns true ONLY on confirmed delivery
@@ -29,6 +30,16 @@ function collectAttribution() {
 
 export async function sendLead({ name, phone, source = 'Website', page, fields } = {}) {
   const resolvedPage = page || (typeof window !== 'undefined' ? window.location.href : '');
+  // Canonicalise the number HERE as well, so no lead can ever leave this
+  // function with a raw "+91 98739-15215" / "09873915215" value: the gateway
+  // validates /^[6-9][0-9]{9}$/, the Sheet stores the number the owner reads
+  // back, and both must get the same 10 digits.
+  const leadPhone = normalizePhone(phone);
+  // The Web3Forms payload spreads `fields` last — strip name/phone from it so
+  // a stray field can never overwrite the normalised number.
+  const restFields = { ...(fields || {}) };
+  delete restFields.name;
+  delete restFields.phone;
   // Gateway "message": fold every extra fields entry (the Worker only
   // accepts site/name/phone/source/page/message/botcheck, so service, date,
   // etc. would otherwise be dropped) into "Label: value" lines, then append
@@ -73,7 +84,7 @@ export async function sendLead({ name, phone, source = 'Website', page, fields }
         body: JSON.stringify({
           site: SITE_KEY,
           name: name || '',
-          phone: phone || '',
+          phone: leadPhone,
           source,
           page: resolvedPage,
           ...(gatewayMessage ? { message: gatewayMessage } : {}),
@@ -112,14 +123,14 @@ export async function sendLead({ name, phone, source = 'Website', page, fields }
         subject: 'New lead - Balaji Deep Cleaning',
         from_name: 'Balaji Website',
         name: name || '',
-        phone: phone || '',
+        phone: leadPhone,
         source,
         page: page || (typeof window !== 'undefined' ? window.location.href : ''),
         botcheck: '', // honeypot — must stay empty; free plan has no domain restriction
         ...(attr.cg_gclid ? { 'Ad Click ID': attr.cg_gclid } : {}),
         ...(utmLine ? { Campaign: utmLine } : {}),
         ...(attr.cg_landing_page ? { 'Landing Page': attr.cg_landing_page } : {}),
-        ...(fields || {}),
+        ...restFields,
       }),
       ...(ctrl ? { signal: ctrl.signal } : {}),
     });

@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PHONE, waMsg } from '../lib/site.js';
 import { sendLead } from '../lib/sendLead.js';
 import { track, whatsappClick } from '../lib/landing.js';
+import { normalizePhone, isValidPhone } from '../lib/phone.js';
+import { focusField, notifyRejected } from '../lib/form-reject.js';
 
 const STEPS = [{ title: 'Your Details' }, { title: 'Service' }, { title: 'Schedule' }];
 const STORAGE_KEY = 'sdc_lead';
@@ -12,6 +14,9 @@ export default function MultiStepForm() {
   const [data, setData] = useState({ name: '', phone: '', service: '', date: '', message: '' });
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const [focusPhone, setFocusPhone] = useState(false);
+  const nameRef = useRef(null);
+  const phoneRef = useRef(null);
 
   useEffect(() => {
     try {
@@ -26,17 +31,71 @@ export default function MultiStepForm() {
     } catch (e) {}
   }, [data]);
 
+  // The phone field only exists on step 0, so the focus has to be moved
+  // AFTER the step that holds it is on screen again.
+  useEffect(() => {
+    if (!focusPhone) return;
+    focusField(phoneRef.current);
+    setFocusPhone(false);
+  }, [focusPhone]);
+
   const set = (k, v) => setData((d) => ({ ...d, [k]: v }));
-  const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1));
+
+  // Validate the details before the visitor leaves step 0. The number is
+  // normalised first, so "+91 98739-15215" and "09873915215" are accepted;
+  // the browser's old numeric pattern attribute (digits, a plus and a
+  // space, 8-15 chars) refused a hyphenated number outright and the lead
+  // was lost.
+  const detailsError = () => {
+    const n = String(data.name || '').trim();
+    if (n.length < 2) {
+      setError('❌ Please enter your full name.');
+      focusField(nameRef.current);
+      return true;
+    }
+    if (!isValidPhone(normalizePhone(data.phone))) {
+      setError('❌ Enter a valid 10-digit mobile number (it starts with 6-9).');
+      focusField(phoneRef.current);
+      return true;
+    }
+    return false;
+  };
+
+  const next = () => {
+    if (step === 0) {
+      // No submit happened yet, so nothing was latched as a conversion —
+      // the focus jump is just for the visitor, not a rejection signal.
+      if (detailsError()) return;
+      setError('');
+    }
+    setStep((s) => Math.min(s + 1, STEPS.length - 1));
+  };
   const prev = () => setStep((s) => Math.max(s - 1, 0));
 
   const submit = async (e) => {
     e.preventDefault();
     setStatus('sending');
     setError('');
+    const leadName = String(data.name || '').trim();
+    // Normalise ONCE, at submit — never while typing.
+    const leadPhone = normalizePhone(data.phone);
+    if (leadName.length < 2 || !isValidPhone(leadPhone)) {
+      setStatus('idle');
+      // The site refused the submit: the focus goes back to the field that
+      // has to be fixed (step 0 holds it) and click-guard is told, so the
+      // conversion it latched is undone — no lead exists, so there must be
+      // no owner alert email and no CRM card.
+      setStep(0);
+      setFocusPhone(true);
+      setError(leadName.length < 2
+        ? '❌ Please enter your full name.'
+        : '❌ Enter a valid 10-digit mobile number (it starts with 6-9).');
+      notifyRejected();
+      return;
+    }
     const ok = await sendLead({
-      name: data.name,
-      phone: data.phone,
+      name: leadName,
+      phone: leadPhone,
       source: 'Multi-Step Form',
       fields: { service: data.service, date: data.date, message: data.message },
     });
@@ -48,6 +107,11 @@ export default function MultiStepForm() {
     }
     setStatus('idle');
     setError(`❌ Couldn't send your request. Please call ${PHONE} or`);
+    // The send failed, so no lead exists on the site either — click-guard
+    // must not count this as a conversion.
+    notifyRejected();
+    setStep(0);
+    setFocusPhone(true);
   };
 
   return (
@@ -64,14 +128,18 @@ export default function MultiStepForm() {
       {step === 0 && (
         <>
           <label>Your Name *</label>
-          <input value={data.name} onChange={(e) => set('name', e.target.value)} required />
+          <input value={data.name} onChange={(e) => set('name', e.target.value)} required ref={nameRef} />
           <label>Phone *</label>
+          {/* No browser pattern attribute: the old one (digits, a plus and a
+              space, 8-15 chars) refused a hyphenated number before the
+              visitor could submit, so the lead was lost. The number is
+              validated in JS (normalised first) instead. */}
           <input
             type="tel"
             value={data.phone}
             onChange={(e) => set('phone', e.target.value)}
-            pattern="[0-9+ ]{8,15}"
             required
+            ref={phoneRef}
           />
         </>
       )}
