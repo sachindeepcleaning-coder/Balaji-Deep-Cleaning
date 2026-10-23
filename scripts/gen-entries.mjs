@@ -174,7 +174,8 @@ ${noindex}  <meta name="geo.region" content="IN-HR" />
   <meta name="twitter:description" content="${p.description}" />
   <meta name="twitter:image" content="${ogImage}" />
   <meta name="twitter:image:alt" content="${ogAlt}" />
-${preload}  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="preload" as="image" imagesrcset="/images/template/home/Balaji-Deep-Cleaning-banner-1-800w.webp 800w, /images/template/home/Balaji-Deep-Cleaning-banner-1.webp 1920w" imagesizes="100vw" fetchpriority="high" />
+  ${preload}  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
   <link rel="dns-prefetch" href="https://www.clarity.ms" />

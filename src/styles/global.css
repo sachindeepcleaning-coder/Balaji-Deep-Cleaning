@@ -176,6 +176,11 @@ video { height: auto; }
 
 /* ---------- Hero (template slider look, static) ---------- */
 .hero { position: relative; overflow: hidden; background: #000d26 url('/images/template/home/Balaji-Deep-Cleaning-banner-1.webp') center/cover no-repeat; }
+/* LCP image: phones get an 800w variant (the 1920w file is preloaded for
+   desktop via the head's imagesrcset link) */
+@media (max-width: 800px) {
+  .hero { background-image: url('/images/template/home/Balaji-Deep-Cleaning-banner-1-800w.webp'); }
+}
 .hero::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(135deg, rgba(0,13,38,.78) 0%, rgba(0,13,38,.55) 60%, rgba(0,168,240,.35) 100%);
