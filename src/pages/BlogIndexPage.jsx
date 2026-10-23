@@ -1,4 +1,4 @@
-import { ARTICLES } from '../lib/blog.js';
+import { ARTICLE_INDEX as ARTICLES } from '../generated/article-index.js';
 import { JsonLd, breadcrumbSchema } from '../lib/schema.jsx';
 import { pageUrl } from '../lib/site.js';
 import TrustBar from '../components/TrustBar.jsx';

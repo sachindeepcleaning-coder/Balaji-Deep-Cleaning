@@ -4,7 +4,7 @@ import YtShortsSection from '../components/YtShortsSection.jsx';
 import { JsonLd, breadcrumbSchema } from '../lib/schema.jsx';
 import { pageUrl, WA_BOOK, waMsg } from '../lib/site.js';
 import { whatsappClick } from '../lib/landing.js';
-import { ARTICLES } from '../lib/blog.js';
+import { ARTICLE_INDEX as ARTICLES } from '../generated/article-index.js';
 
 const GROUPS = [
   {

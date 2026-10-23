@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { ThemeProvider } from './lib/theme.jsx';
 import Layout from './components/Layout.jsx';
 import { pageUrl } from './lib/site.js';
+import { getArticleRoute } from './lib/article-routes.jsx';
 
 // Route-split: each page hydrates from its own JS chunk instead of one
 // 600KB+ bundle. The prerendered HTML is identical, so there is no visual
@@ -36,7 +37,11 @@ export default function App({ page = 'index', file = 'index', serviceKey, bhk })
   else if (page === 'allpages') Page = AllPagesPage;
   else if (page === 'about') Page = AboutPage;
   else if (page === 'blog') Page = BlogIndexPage;
-  else if (page === 'article') Page = BlogArticlePage;
+  else if (page === 'article') {
+    // Per-article chunk: the guide's own copy is fetched on its own, so a
+    // blog page no longer downloads the whole 85-article collection.
+    Page = getArticleRoute(file) || BlogArticlePage;
+  }
   else if (page === 'notfound') Page = NotFoundPage;
 
   return (

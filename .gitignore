@@ -5,6 +5,9 @@ dist-ssr
 .vite
 .DS_Store
 
+# Generated per-article modules + index (projection of src/lib/blog.js)
+src/generated
+
 # Local-only docs (never push .md to GitHub)
 *.md
 

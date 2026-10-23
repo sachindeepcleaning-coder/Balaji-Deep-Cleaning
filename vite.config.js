@@ -27,6 +27,18 @@ const htmlFiles = collectHtml(__dirname).filter(
   (f) => !f.endsWith('google4bc4a68e1ff9b7f5.html')
 );
 
+// Project src/lib/blog.js into per-article modules + a metadata index BEFORE
+// anything is bundled. This keeps the ~1 MB authored collection out of the
+// browser bundle: each guide gets its own chunk and the listing pages only
+// load the metadata index. Runs on every dev server and every build, so the
+// projection can never go stale.
+{
+  const { execFileSync } = await import('node:child_process');
+  execFileSync(process.execPath, [path.resolve(__dirname, 'scripts/gen-article-modules.mjs')], {
+    stdio: 'inherit',
+  });
+}
+
 // Input key = path relative to root; Vite preserves the folder structure
 // so blog/deep-cleaning-cost-gurgaon-2026.html emits dist/blog/… .html.
 const input = Object.fromEntries(
@@ -48,6 +60,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    // Emitted so scripts/gen-modulepreload.mjs can map each prerendered page
+    // to its own JS chunk and inject <link rel="modulepreload">. That removes
+    // one serial round trip: the page chunk is fetched in parallel with the
+    // entry chunk instead of after React.lazy resolves it.
+    manifest: true,
     rollupOptions: {
       input,
       output: {

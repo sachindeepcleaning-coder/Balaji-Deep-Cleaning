@@ -25,19 +25,35 @@ import { imageDims } from '../src/lib/image-dims.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
 
-const gtm = `<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id=${GTM_ID}';f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');</script>
+// Google Tag Manager — loaded only after first user interaction (or a 10s
+// timeout), so third-party analytics never blocks rendering or costs INP.
+const gtm = `<!-- Google Tag Manager (on-interaction: analytics must not cost INP) -->
+<script>(function(){var id='${GTM_ID}';function load(){if(window.__gtmLoaded)return;window.__gtmLoaded=true;window.dataLayer=window.dataLayer||[];window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=document.getElementsByTagName('script')[0],j=document.createElement('script');j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+id;f.parentNode.insertBefore(j,f);}function arm(){var evs=['scroll','click','touchstart','keydown'];evs.forEach(function(e){window.addEventListener(e,load,{once:true,passive:true});});setTimeout(load,10000);}if(document.readyState==='complete'||document.readyState==='interactive'){arm();}else{window.addEventListener('DOMContentLoaded',arm,{once:true});}})();</script>
 <!-- End Google Tag Manager -->`;
 
 const gtmNoscript = `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
 
-const clarity = `<!-- Microsoft Clarity -->
+// Standard (immediate) GTM snippet — used ONLY on thank-you.html so the
+// lead conversion fires on page view without waiting for user interaction.
+const gtmStd = `<!-- Google Tag Manager (thank-you: immediate, conversion must fire) -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id=${GTM_ID}';f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');</script>
+<!-- End Google Tag Manager -->`;
+
+// Once-per-session repeat guard for thank-you.html. Must run BEFORE the GTM
+// snippet: on a repeat view in the same tab session it pushes
+// {thankyou_repeat:true} so a GTM exception (to be added) can skip the
+// conversion; first visit only sets the flag and changes nothing.
+const tyGuard = `<script>try{window.dataLayer=window.dataLayer||[];if(window.sessionStorage&&sessionStorage.getItem('ty_seen')){window.dataLayer.push({thankyou_repeat:true});}else if(window.sessionStorage){sessionStorage.setItem('ty_seen','1');}}catch(_){}</script>`;
+
+// Microsoft Clarity — deferred to first user interaction like GTM. Session
+// recordings are masked so typed names/phone numbers never hit the heatmap.
+const clarity = `<!-- Microsoft Clarity (on-interaction: must not cost INP) -->
 <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "${CLARITY_ID}");
+window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
+window.clarity('set', 'mask', 'input, textarea, select');
+</script>
+<script type="text/javascript">
+(function(){function load(){if(window.__clarityLoaded)return;window.__clarityLoaded=true;(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "${CLARITY_ID}");}function arm(){var evs=['scroll','click','touchstart','keydown'];evs.forEach(function(e){window.addEventListener(e,load,{once:true,passive:true});});setTimeout(load,10000);}if(document.readyState==='complete'||document.readyState==='interactive'){arm();}else{window.addEventListener('DOMContentLoaded',arm,{once:true});}})();
 </script>
 <!-- End Microsoft Clarity -->`;
 
@@ -93,7 +109,9 @@ for (const p of pages) {
     continue;
   }
 
-  const noindex = p.noindex ? '  <meta name="robots" content="noindex, nofollow" />\n' : '';
+  const noindex = p.noindex
+    ? '  <meta name="robots" content="noindex, nofollow" />\n'
+    : '  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />\n';
   const ogType = p.page === 'article' ? 'article' : 'website';
   const preload = p.page === 'service' && p.serviceKey && HERO_IMAGES[p.serviceKey]
     ? `  <link rel="preload" as="image" href="${HERO_IMAGES[p.serviceKey]}" fetchpriority="high" />\n`
@@ -150,14 +168,20 @@ ${noindex}  <meta name="geo.region" content="IN-HR" />
   <meta property="og:image:alt" content="${ogAlt}" />
   <meta property="og:image:width" content="${ogW}" />
   <meta property="og:image:height" content="${ogH}" />
+  <meta property="og:image:type" content="${ogImage.endsWith('.webp') ? 'image/webp' : 'image/jpeg'}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${p.title}" />
   <meta name="twitter:description" content="${p.description}" />
   <meta name="twitter:image" content="${ogImage}" />
-${preload}  ${gtm}
+  <meta name="twitter:image:alt" content="${ogAlt}" />
+${preload}  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
+  <link rel="dns-prefetch" href="https://www.clarity.ms" />
+  ${p.file === 'thank-you' ? tyGuard + '\n  ' + gtmStd : gtm}
   ${clarity}
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/poppins-400.woff2" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/poppins-700.woff2" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin fetchpriority="high" href="/fonts/poppins-400.woff2" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin fetchpriority="high" href="/fonts/poppins-700.woff2" />
   <link rel="stylesheet" href="/src/styles/global.css" />
   <script src="/tracking.js" defer></script>
 <script src="/beacon.js" defer></script>

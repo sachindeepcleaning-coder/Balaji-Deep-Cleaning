@@ -94,9 +94,13 @@ git ls-remote origin   # truth: main + gh-pages SHAs
 | File/Dir | Purpose |
 |----------|---------|
 | `pages.config.mjs` | Single source of truth for every MPA page (file, page type, title, description, `noindex`) |
-| `scripts/gen-entries.mjs` | Generates HTML entry shells from `pages.config.mjs` (run `npm run gen` after editing it; also emits font preloads) |
+| `scripts/gen-entries.mjs` | Generates HTML entry shells from `pages.config.mjs` (run `npm run gen` after editing it; also emits font preloads, deferred GTM/Clarity, preconnects) |
+| `scripts/gen-article-modules.mjs` | Projects `src/lib/blog.js` (~1 MB, 85 guides) into per-article chunks + a light metadata index — a blog page loads one article, not all 85 |
 | `scripts/gen-sitemap.mjs` | Regenerates `public/sitemap.xml` with fresh `lastmod` (runs automatically on `npm run build`; skips `noindex` pages) |
+| `scripts/gen-modulepreload.mjs` | Injects `<link rel="modulepreload">` per page chunk so lazy routes download in parallel with the entry (before prerender) |
 | `scripts/prerender.mjs` | Renders every page to static HTML with `ReactDOMServer` and injects it into `dist/` (SEO: Google/Bing see content + JSON-LD without JS) |
+| `scripts/minify-public-js.mjs` | Minifies the hand-written `beacon.js`/`tracking.js` copies in `dist/` (≈70% smaller) |
+| `scripts/inline-css.mjs` | Inlines the built stylesheet + the two above-the-fold webfonts into every HTML file — removes the last render-blocking request |
 | `src/app.jsx` | Shared app tree (route-split via `React.lazy` + `Suspense`; passes `page` to `Layout` for chrome variants) |
 | `src/prerender-entry.jsx` | SSR entry (`renderToPipeableStream`, required for lazy pages) for `scripts/prerender.mjs` |
 | `src/bootstrap.jsx` | Hydrates the pre-rendered HTML (or renders normally in dev) based on `data-page` |
@@ -121,11 +125,19 @@ git ls-remote origin   # truth: main + gh-pages SHAs
 ```bash
 npm install
 npm run dev        # local dev server http://localhost:5173
-npm run build      # production build → dist/ (lint → sitemap → vite → prerender)
-npm run gen        # regenerate HTML entry shells after editing pages.config.mjs
+npm run build      # production build → dist/ (gen-entries → article-split → lint → sitemap → vite → modulepreload → prerender → minify → inline-css)
+npm run gen        # regenerate HTML entry shells + article modules after editing pages.config.mjs
 # preview a build locally:
 python3 -m http.server 8322 --directory dist   # → http://localhost:8322/
 ```
+
+## ⚡ Performance architecture (built-in)
+
+- **No render-blocking stylesheet.** The whole CSS is inlined into each HTML file (`inline-css.mjs`), and the two above-the-fold fonts (Poppins 400/700) are embedded as data URLs in that CSS — text paints at first paint, no font-swap CLS, no late LCP.
+- **Analytics never costs INP.** GTM and Clarity load only after first interaction (scroll/click/touch/keydown or a 10s timeout) via the `on-interaction` snippet in `gen-entries.mjs`; `preconnect`/`dns-prefetch` warm their origins. `thank-you.html` alone loads GTM immediately so conversions always fire.
+- **Route-split JS + modulepreload.** Each page hydrates from its own chunk; `gen-modulepreload.mjs` preloads the page chunk (and its static imports at `fetchpriority=low`) so nothing waits on `React.lazy`.
+- **Per-article chunks.** `gen-article-modules.mjs` splits the ~1 MB article collection, so a guide page ships one guide (~10–25 KB) instead of a 920 KB `blog.js` chunk.
+- **Minified public JS.** `beacon.js`/`tracking.js` are minified in `dist/` (~70% smaller) while the readable sources stay in `public/`.
 
 ## ⚙️ Config
 
@@ -142,7 +154,7 @@ python3 -m http.server 8322 --directory dist   # → http://localhost:8322/
 - **Sitemap:** 106 URLs (excludes `thank-you`, `404`, and the 2 noindex PPC pages) · **Indexing API: reset for the new domain** (`indexing-progress.json` starts empty)
 - **Blog:** 85 articles + booking landing page + society page · titles/descs/H1s unique
 - **PPC pages (noindex, ads-only):** `book-deep-cleaning-services-in-gurgaon.html` + `book-house-deep-cleaning-services-in-gurgaon.html` — 40% OFF offer, exact-keyword H1s, hidden from search + sitemap so they never cannibalize SEO money pages
-- **Performance:** route-split JS; videos `preload="none"` (nothing downloads until played)
+- **Performance:** route-split JS + modulepreload; inline critical CSS + above-fold fonts (no render-blocking stylesheet); GTM/Clarity deferred to first interaction; videos `preload="none"` (nothing downloads until played)
 - **Hydration rule:** SSR output must equal first client render — never mutate another component's DOM; keep effects out of render output.
 
 ## 📝 Content System (how pages get built)

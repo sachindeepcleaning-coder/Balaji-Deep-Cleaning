@@ -1,5 +1,4 @@
 import { JsonLd, articleSchema, faqSchema, breadcrumbSchema } from '../lib/schema.jsx';
-import { getArticle } from '../lib/blog.js';
 import { pageUrl } from '../lib/site.js';
 import { imageDims, srcSetFor } from '../lib/image-dims.js';
 import QuoteForm from '../components/QuoteForm.jsx';
@@ -95,9 +94,7 @@ function secondaryImage(article) {
   return null;
 }
 
-export default function BlogArticlePage({ file = 'blog', url = '' }) {
-  const article = getArticle(file);
-
+export default function BlogArticlePage({ file = 'blog', url = '', article = null }) {
   if (!article) {
     return (
       <section className="section">
