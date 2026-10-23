@@ -50,7 +50,7 @@ function IgCard({ id, label, caption, poster, onTrack }) {
                 setPlay(true);
                 onTrack(`Reel ${id}`);
               }}
-              aria-label={`Play Instagram reel: ${caption}`}
+              aria-label={`Play Instagram reel: ${caption} — watch on Instagram`}
             >
               <img
                 src={poster}

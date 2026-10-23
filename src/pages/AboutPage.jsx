@@ -272,11 +272,11 @@ export default function AboutPage({ url }) {
             <img src="/images/cleaning-1.webp" alt="Balaji Deep Cleaning team in Gurgaon — police-verified lead specialists" width="180" height="180" style={{ borderRadius: '50%', width: 140, height: 140, objectFit: 'cover', border: '3px solid var(--primary)' }} loading="lazy" />
             <div style={{ flex: 1, minWidth: 260 }}>
               <h3 style={{ fontFamily: 'Syne', fontWeight: 800, marginBottom: 8 }}>Balaji Deep Cleaning — Founder & Lead Specialist</h3>
-              <p style={{ color: 'var(--muted)', lineHeight: 1.7, marginBottom: 12 }}>10+ years cleaning Gurgaon homes from DLF Phase 5 to Sector 92. Police-verified, owner-present on every 3 BHK+ job, 148 verified Google reviews. Trained in descaling, extraction and food-safe degreasing. <a href="/blog/best-deep-cleaning-services-gurgaon.html" style={{ color: 'var(--primary)', fontWeight: 700 }}>See how we compare →</a></p>
+              <p style={{ color: 'var(--muted)', lineHeight: 1.7, marginBottom: 12 }}>10+ years cleaning Gurgaon homes from DLF Phase 5 to Sector 92. Police-verified, owner-present on every 3 BHK+ job, 148 verified Google reviews. Trained in descaling, extraction and food-safe degreasing. <a href="/blog/best-deep-cleaning-services-gurgaon.html" style={{ color: 'var(--primary-text)', fontWeight: 700 }}>See how we compare →</a></p>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                <a href={SOCIAL.facebook} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700 }}>Facebook →</a>
-                <a href={SOCIAL.instagram} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700 }}>Instagram →</a>
-                <a href={WHATSAPP} target="_blank" rel="noopener" onClick={whatsappClick} style={{ color: 'var(--primary)', fontWeight: 700 }}>WhatsApp →</a>
+                <a href={SOCIAL.facebook} target="_blank" rel="noopener" style={{ color: 'var(--primary-text)', fontWeight: 700 }}>Facebook →</a>
+                <a href={SOCIAL.instagram} target="_blank" rel="noopener" style={{ color: 'var(--primary-text)', fontWeight: 700 }}>Instagram →</a>
+                <a href={WHATSAPP} target="_blank" rel="noopener" onClick={whatsappClick} style={{ color: 'var(--primary-text)', fontWeight: 700 }}>WhatsApp →</a>
               </div>
             </div>
           </div>

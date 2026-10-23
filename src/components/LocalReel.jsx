@@ -62,7 +62,19 @@ export default function LocalReel() {
         <div className="sdc-reel-grid sdc-reel-single">
           <div className="sdc-reel-item">
             <span className="sdc-reel-kicker">Real Jobs · Gurgaon</span>
-            <div ref={wrapRef} className="sdc-reel" onClick={toggle} role="button" aria-label="Deep cleaning video — tap to pause">
+            <div
+              ref={wrapRef}
+              className="sdc-reel"
+              onClick={toggle}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  toggle();
+                }
+              }}
+            >
               <video
                 ref={videoRef}
                 src={visible ? CLIP : undefined}

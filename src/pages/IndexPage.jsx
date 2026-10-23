@@ -28,7 +28,7 @@ export default function IndexPage({ url }) {
       <section className="section">
         <div className="section-inner split">
           <div className="fade-up">
-            <img src="/images/template/about.webp" alt="Balaji Deep Cleaning professional team at work in Gurgaon" className="split-img" loading="lazy" width="570" height="420" />
+            <img src="/images/template/about.webp" srcSet="/images/template/about-400w.webp 400w, /images/template/about.webp 720w" sizes="(max-width: 640px) 400px, 720px" alt="Balaji Deep Cleaning professional team at work in Gurgaon" className="split-img" loading="lazy" width="570" height="420" decoding="async" />
           </div>
           <div className="split-text fade-up">
             <div className="section-tag">About Balaji Deep Cleaning</div>

@@ -12,9 +12,11 @@
   --primary: #00a8f0;          /* template sky blue */
   --primary-dark: #0088c7;
   --primary-darker: #006fa3;
+  --primary-deep: #00608f;     /* hover for on-blue controls */
+  --primary-text: #0077b0;     /* AA-safe sky blue for text/on-white (4.9:1) */
   --primary-soft: #e3f5fe;
   --accent: #90c714;           /* template lime */
-  --accent-dark: #6fa30e;
+  --accent-dark: #557d0a;      /* AA-safe lime for text (4.9:1 on white) */
   --accent-soft: #f2f9e2;
   --on-primary: #ffffff;
 
@@ -34,7 +36,7 @@
   --card-muted: #f6fafd;
   --dark: #111111;
   --text: #464646;
-  --muted: #757575;
+  --muted: #6b6b6b;
   --border: #dcdcdc;
 
   --footer-bg: #000d26;

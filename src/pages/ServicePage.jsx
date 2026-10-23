@@ -27,7 +27,7 @@ function Rich({ text }) {
     const m = s.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (m) {
       const ext = /^https?:/.test(m[2]);
-      return <a key={i} href={m[2]} {...(ext ? { target: '_blank', rel: 'noopener' } : {})} style={{ color: 'var(--primary)', fontWeight: 700 }}>{m[1]}</a>;
+      return <a key={i} href={m[2]} {...(ext ? { target: '_blank', rel: 'noopener' } : {})} style={{ color: 'var(--primary-text)', fontWeight: 700 }}>{m[1]}</a>;
     }
     return String(s).split(/\*\*(.+?)\*\*/g).map((p, j) => (j % 2 === 1 ? <strong key={`${i}-${j}`}>{p}</strong> : p));
   });
@@ -231,14 +231,14 @@ export default function ServicePage({ serviceKey, bhk, url = '' }) {
             </div>
             <div className="fade-up" style={{ marginTop: 32, overflowX: 'auto', borderRadius: 14, border: '1px solid var(--border)' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', background: 'var(--card)' }}>
-                <thead><tr style={{ background: 'var(--primary)' }}>{s.priceCheck.head.map((h) => (
+                <thead><tr style={{ background: 'var(--primary-text)' }}>{s.priceCheck.head.map((h) => (
                   <th key={h} style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>{h}</th>
                 ))}</tr></thead>
                 <tbody>
                   {s.priceCheck.rows.map((r, i) => (
                     <tr key={i} style={{ background: i % 2 ? 'var(--card)' : 'var(--bg-alt)' }}>
                       {r.map((c, j) => (
-                        <td key={j} style={{ padding: '13px 20px', borderBottom: '1px solid var(--border)', color: j === 1 ? 'var(--primary)' : 'inherit', fontWeight: j === 1 ? 700 : 400 }}>{c}</td>
+                        <td key={j} style={{ padding: '13px 20px', borderBottom: '1px solid var(--border)', color: j === 1 ? 'var(--primary-text)' : 'inherit', fontWeight: j === 1 ? 700 : 400 }}>{c}</td>
                       ))}
                     </tr>
                   ))}
@@ -260,16 +260,16 @@ export default function ServicePage({ serviceKey, bhk, url = '' }) {
             </div>
             <div className="fade-up" style={{ marginTop: 32, overflowX: 'auto', borderRadius: 14, border: '1px solid var(--border)' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', background: 'var(--card)' }}>
-                <thead><tr style={{ background: 'var(--primary)' }}><th style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>BHK</th><th style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>Area</th><th style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>Price</th></tr></thead>
+                <thead><tr style={{ background: 'var(--primary-text)' }}><th style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>BHK</th><th style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>Area</th><th style={{ padding: '14px 20px', color: '#fff', textAlign: 'left' }}>Price</th></tr></thead>
                 <tbody>
                   {[1,2,3,4,5].map((n) => (
                     <tr key={n} style={{ background: n % 2 ? 'var(--card)' : 'var(--bg-alt)' }}>
                       <td style={{ padding: '13px 20px', borderBottom: '1px solid var(--border)' }}>{n} BHK</td>
                       <td style={{ padding: '13px 20px', borderBottom: '1px solid var(--border)' }}>{s.sqftByBhk[n]}</td>
-                      <td style={{ padding: '13px 20px', borderBottom: '1px solid var(--border)', color: 'var(--primary)', fontWeight: 700 }}>{s.priceByBhk[n]}</td>
+                      <td style={{ padding: '13px 20px', borderBottom: '1px solid var(--border)', color: 'var(--primary-text)', fontWeight: 700 }}>{s.priceByBhk[n]}</td>
                     </tr>
                   ))}
-                  <tr style={{ background: 'var(--card)' }}><td style={{ padding: '13px 20px' }}>1 RK / Studio</td><td style={{ padding: '13px 20px' }}>Up to 400 sq ft</td><td style={{ padding: '13px 20px', color: 'var(--primary)', fontWeight: 700 }}>₹2,000</td></tr>
+                  <tr style={{ background: 'var(--card)' }}><td style={{ padding: '13px 20px' }}>1 RK / Studio</td><td style={{ padding: '13px 20px' }}>Up to 400 sq ft</td><td style={{ padding: '13px 20px', color: 'var(--primary-text)', fontWeight: 700 }}>₹2,000</td></tr>
                 </tbody>
               </table>
             </div>

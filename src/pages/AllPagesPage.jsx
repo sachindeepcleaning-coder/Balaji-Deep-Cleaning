@@ -127,7 +127,7 @@ export default function AllPagesPage({ url }) {
               <a
                 href={waMsg('Hi, I need help choosing the right cleaning service in Gurgaon. Please advise.')}
                 target="_blank" rel="noopener"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 28px', background: '#25D366', color: '#fff', borderRadius: '12px', textDecoration: 'none', fontWeight: 800, fontSize: '.95rem' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 28px', background: '#0e7a4d', color: '#fff', borderRadius: '12px', textDecoration: 'none', fontWeight: 800, fontSize: '.95rem' }}
                 onClick={whatsappClick}
               >
                 💬 WhatsApp Us

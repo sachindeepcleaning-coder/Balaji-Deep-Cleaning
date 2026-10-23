@@ -20,14 +20,20 @@ const root = resolve(__dirname, '..');
 const distDir = resolve(root, 'dist');
 const assetsDir = resolve(distDir, 'assets');
 
-// The two above-the-fold fonts are embedded as base64 data URLs inside the
-// inlined stylesheet. The webfont swap was a CLS source on desktop (the H1
-// re-wrapped when Poppins arrived after first paint) and it also delayed the
-// LCP text on mobile. With the fonts inside the render-blocking CSS the real
-// typeface is available at the very first paint: no swap, no reflow, no late
-// LCP candidate. The other weights (600/800, used below the fold) stay normal
-// files so they are never paid for above the fold.
-const INLINE_FONTS = ['/fonts/poppins-400.woff2', '/fonts/poppins-700.woff2'];
+// All four above-the-fold Poppins weights are embedded as base64 data URLs
+// inside the inlined stylesheet, so no font file is ever requested over the
+// network. The webfont swap was a CLS source on desktop (the H1 re-wrapped
+// when Poppins arrived after first paint) and it also delayed the LCP text on
+// mobile — the hero mixes 400/600/700/800, so leaving any weight as a file
+// still cost a serial font fetch (the longest chain in the load trace). With
+// the fonts inside the render-blocking CSS the real typeface is available at
+// the very first paint: no swap, no reflow, no late LCP candidate.
+const INLINE_FONTS = [
+  '/fonts/poppins-400.woff2',
+  '/fonts/poppins-600.woff2',
+  '/fonts/poppins-700.woff2',
+  '/fonts/poppins-800.woff2',
+];
 
 function inlineFontUrls(css) {
   for (const fontPath of INLINE_FONTS) {

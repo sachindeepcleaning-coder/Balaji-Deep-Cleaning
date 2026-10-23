@@ -12,7 +12,7 @@ function Rich({ text }) {
     const m = s.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (m) {
       const ext = /^https?:/.test(m[2]);
-      return <a key={i} href={m[2]} {...(ext ? { target: '_blank', rel: 'noopener' } : {})} style={{ color: 'var(--primary)', fontWeight: 700 }}>{m[1]}</a>;
+      return <a key={i} href={m[2]} {...(ext ? { target: '_blank', rel: 'noopener' } : {})} style={{ color: 'var(--primary-darker)', fontWeight: 700 }}>{m[1]}</a>;
     }
     return String(s).split(/\*\*(.+?)\*\*/g).map((p, j) => (j % 2 === 1 ? <strong key={`${i}-${j}`}>{p}</strong> : p));
   });
@@ -100,7 +100,7 @@ export default function BlogArticlePage({ file = 'blog', url = '', article = nul
       <section className="section">
         <div className="section-inner" style={{ textAlign: 'center' }}>
           <h1>Article not found</h1>
-          <p style={{ color: 'var(--muted)' }}>This guide does not exist. <a href="/blog.html" style={{ color: 'var(--primary)' }}>Browse all guides</a>.</p>
+          <p style={{ color: 'var(--muted)' }}>This guide does not exist. <a href="/blog.html" style={{ color: 'var(--primary-text)' }}>Browse all guides</a>.</p>
         </div>
       </section>
     );
@@ -129,7 +129,7 @@ export default function BlogArticlePage({ file = 'blog', url = '', article = nul
             <span>·</span>
             <span>{mins} min read</span>
             <span>·</span>
-            <span>By <a href="/about.html#sachin-kumar" style={{ color: 'var(--primary)', fontWeight: 700 }}>Balaji Deep Cleaning</a>, Founder</span>
+            <span>By <a href="/about.html#sachin-kumar" style={{ color: 'var(--primary-text)', fontWeight: 700 }}>Balaji Deep Cleaning</a>, Founder</span>
           </div>
           <h1>{article.title}</h1>
           {article.printable && (
@@ -187,7 +187,7 @@ export default function BlogArticlePage({ file = 'blog', url = '', article = nul
                   { href: '/bathroom-deep-cleaning-gurgaon.html', label: 'Bathroom Deep Cleaning Gurgaon →' },
                   { href: '/sofa-shampoo-cleaning-gurgaon.html', label: 'Sofa Shampoo Cleaning Gurgaon →' },
                 ].filter((l) => !article.cta || l.href !== article.cta.href).slice(0, 3).map((l) => (
-                  <a key={l.href} href={l.href} style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '.88rem' }}>{l.label}</a>
+                  <a key={l.href} href={l.href} style={{ fontWeight: 700, fontSize: '.88rem' }}>{l.label}</a>
                 ))}
               </div>
             </div>
@@ -202,13 +202,13 @@ export default function BlogArticlePage({ file = 'blog', url = '', article = nul
               <h2 className="blog-h2">Sources & further reading</h2>
               <ul className="blog-ul">
                 {article.sources.map((s, i) => (
-                  <li key={i}><a href={s.href} target="_blank" rel="noopener" style={{ color: 'var(--primary)', fontWeight: 700 }}>{s.label}</a></li>
+                  <li key={i}><a href={s.href} target="_blank" rel="noopener" style={{ color: 'var(--primary-text)', fontWeight: 700 }}>{s.label}</a></li>
                 ))}
               </ul>
             </div>
           )}
           <p className="blog-end" style={{ textAlign: 'center', marginTop: '40px' }}>
-            <a href="/blog.html" style={{ color: 'var(--primary)', fontWeight: 700 }}>More cleaning guides for Gurgaon homes →</a>
+            <a href="/blog.html" style={{ color: 'var(--primary-text)', fontWeight: 700 }}>More cleaning guides for Gurgaon homes →</a>
           </p>
         </div>
       </section>

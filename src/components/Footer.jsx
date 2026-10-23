@@ -29,7 +29,7 @@ export default function Footer() {
       <div className="footer-grid">
         <div className="footer-brand">
           <a href="/" className="logo">
-            <img src="/images/template/logo.webp?v=3" alt="Balaji Deep Cleaning logo" className="logo-icon" width="163" height="48" loading="lazy" decoding="async" />
+            <img src="/images/template/logo.webp?v=3" srcSet="/images/template/logo-272w.webp 272w, /images/template/logo.webp?v=3 400w" sizes="163px" alt="Balaji Deep Cleaning logo" className="logo-icon" width="163" height="48" loading="lazy" decoding="async" />
           </a>
           <p>Professional deep cleaning in Gurgaon since 2015 — police-verified team, eco-friendly products, pay only after you approve the work.</p>
           <p style={{ marginTop: '12px' }}>📍 Serving all of Gurgaon, Haryana</p>
@@ -43,19 +43,19 @@ export default function Footer() {
           </p>
         </div>
         <div className="footer-col">
-          <h4>Services</h4>
+          <h2>Services</h2>
           {SERVICE_LINKS.map(([label, href]) => (
             <a key={href} href={href}>{label}</a>
           ))}
         </div>
         <div className="footer-col">
-          <h4>BHK Packages</h4>
+          <h2>BHK Packages</h2>
           {BHK_LINKS.map(([label, href]) => (
             <a key={href} href={href}>{label}</a>
           ))}
         </div>
         <div className="footer-col">
-          <h4>Company</h4>
+          <h2>Company</h2>
           <a href="/about.html">About Us</a>
           <a href="/blog.html">Blog &amp; Guides</a>
           <a href="/blog/deep-cleaning-cost-gurgaon-2026.html">Deep Cleaning Cost Guide</a>
