@@ -315,13 +315,11 @@ export const pages = [
     file: 'book-deep-cleaning-services-in-gurgaon', page: 'ppc',
     title: 'Deep Cleaning Services in Gurgaon | 40% Off Today',
     description: 'Deep cleaning services in Gurgaon — up to 40% OFF today. 1BHK ₹2,500, 2BHK ₹4,500, 3BHK ₹5,500. Verified team, pay after walkthrough. Book on WhatsApp.',
-    noindex: true,
   },
   {
     file: 'book-house-deep-cleaning-services-in-gurgaon', page: 'ppc',
     title: 'House Deep Cleaning Services in Gurgaon | 40% Off',
     description: 'House deep cleaning services in Gurgaon — up to 40% OFF today. Whole-house crews for floors & villas from ₹4,500. Pay after walkthrough. Book now.',
-    noindex: true,
   },
   {
     file: 'blog/nobroker-cleaning-vs-sachin-deep-cleaning', page: 'article',
